@@ -1,0 +1,436 @@
+head
+  title
+  script(src='/socket.io/socket.io.js')
+  link(href='/wikipedia.css' rel='stylesheet' type='text/css')
+#mw-page-base.noprint
+#mw-head-base.noprint
+#content.mw-body(role='main')
+  block content
+#mw-data-after-content
+  .read-more-container
+#mw-navigation
+  h2 Navigation menu
+  #mw-head
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-personal.mw-portlet.mw-portlet-personal.vector-menu(aria-labelledby='p-personal-label' role='navigation')
+      h3#p-personal-label
+        span Personal tools
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li#pt-anonuserpage Not logged in
+          li#pt-anontalk
+            a(href='/wiki/Special:MyTalk' title='Discussion about edits from this IP address [n]' accesskey='n') Talk
+          li#pt-anoncontribs
+            a(href='/wiki/Special:MyContributions' title='A list of edits made from this IP address [y]' accesskey='y') Contributions
+          li#pt-createaccount
+            a(title='You are encouraged to create an account and log in; however, it is not mandatory') Create account
+          li#pt-login
+            a(title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey='o' onclick='send()') Log in
+    #left-navigation
+      // Please do not use role attribute as CSS selector, it is deprecated.
+      nav#p-namespaces.mw-portlet.mw-portlet-namespaces.vector-menu.vector-menu-tabs(aria-labelledby='p-namespaces-label' role='navigation')
+        h3#p-namespaces-label
+          span Namespaces
+        .vector-menu-content
+          ul.vector-menu-content-list
+            li#ca-nstab-main.selected
+              a(href='/wiki/Cactus' title='View the content page [c]' accesskey='c') Article
+            li#ca-talk
+              a(href='/wiki/Talk:Cactus' rel='discussion' title='Discuss improvements to the content page [t]' accesskey='t') Talk
+      // Please do not use role attribute as CSS selector, it is deprecated.
+      nav#p-variants.mw-portlet.mw-portlet-variants.emptyPortlet.vector-menu.vector-menu-dropdown(aria-labelledby='p-variants-label' role='navigation')
+        input.vector-menu-checkbox(type='checkbox' aria-labelledby='p-variants-label')
+        h3#p-variants-label
+          span Variants
+        .vector-menu-content
+          ul.vector-menu-content-list
+    #right-navigation
+      // Please do not use role attribute as CSS selector, it is deprecated.
+      nav#p-views.mw-portlet.mw-portlet-views.vector-menu.vector-menu-tabs(aria-labelledby='p-views-label' role='navigation')
+        h3#p-views-label
+          span Views
+        .vector-menu-content
+          ul.vector-menu-content-list
+            li#ca-view.selected
+              a(href='/wiki/Cactus') Read
+            li#ca-viewsource
+              a(href='/w/index.php?title=Cactus&action=edit' title='This page is protected.\
+              You can view its source [e]' accesskey='e') View source
+            li#ca-history
+              a(href='/w/index.php?title=Cactus&action=history' title='Past revisions of this page [h]' accesskey='h') View history
+      // Please do not use role attribute as CSS selector, it is deprecated.
+      nav#p-cactions.mw-portlet.mw-portlet-cactions.emptyPortlet.vector-menu.vector-menu-dropdown(aria-labelledby='p-cactions-label' role='navigation')
+        input.vector-menu-checkbox(type='checkbox' aria-labelledby='p-cactions-label')
+        h3#p-cactions-label
+          span More
+        .vector-menu-content
+          ul.vector-menu-content-list
+      #p-search(role='search')
+        h3
+          label(for='searchInput') Search
+        #simpleSearch(data-search-loc='header-navigation')
+          input#user(type='search' name='search' placeholder='Search Users' autocapitalize='sentences' title='Search Wikipedia [f]' accesskey='f')
+          input#msg(type='search' name='search' placeholder='Search Wikipedia' autocapitalize='sentences' title='Search Wikipedia [f]' accesskey='f')
+  #mw-panel
+    #p-logo(role='banner')
+      a.mw-wiki-logo(title='Visit the main page' href='/wiki/Main_Page')
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-navigation.mw-portlet.mw-portlet-navigation.vector-menu.vector-menu-portal.portal.portal-first(aria-labelledby='p-navigation-label' role='navigation')
+      h3#p-navigation-label
+        span Navigation
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li#n-mainpage-description
+            a(href='/wiki/Main_Page' title='Visit the main page [z]' accesskey='z') Main page
+          li#n-contents
+            a(href='/wiki/Wikipedia:Contents' title='Guides to browsing Wikipedia') Contents
+          li#n-currentevents
+            a(href='/wiki/Portal:Current_events' title='Articles related to current events') Current events
+          li#n-randompage
+            a(href='/wiki/Special:Random' title='Visit a randomly selected article [x]' accesskey='x') Random article
+          li#n-aboutsite
+            a(href='/wiki/Wikipedia:About' title='Learn about Wikipedia and how it works') About Wikipedia
+          li#n-contactpage
+            a(href='//en.wikipedia.org/wiki/Wikipedia:Contact_us' title='How to contact Wikipedia') Contact us
+          li#n-sitesupport
+            a(href='https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&utm_medium=sidebar&utm_campaign=C13_en.wikipedia.org&uselang=en' title='Support us by donating to the Wikimedia Foundation') Donate
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-interaction.mw-portlet.mw-portlet-interaction.vector-menu.vector-menu-portal.portal(aria-labelledby='p-interaction-label' role='navigation')
+      h3#p-interaction-label
+        span Contribute
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li#n-help
+            a(href='/wiki/Help:Contents' title='Guidance on how to use and edit Wikipedia') Help
+          li#n-introduction
+            a(href='/wiki/Help:Introduction' title='Learn how to edit Wikipedia') Learn to edit
+          li#n-portal
+            a(href='/wiki/Wikipedia:Community_portal' title='The hub for editors') Community portal
+          li#n-recentchanges
+            a(href='/wiki/Special:RecentChanges' title='A list of recent changes to Wikipedia [r]' accesskey='r') Recent changes
+          li#n-upload
+            a(href='/wiki/Wikipedia:File_Upload_Wizard' title='Add images or other media for use on Wikipedia') Upload file
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-tb.mw-portlet.mw-portlet-tb.vector-menu.vector-menu-portal.portal(aria-labelledby='p-tb-label' role='navigation')
+      h3#p-tb-label
+        span Tools
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li#t-whatlinkshere
+            a(href='/wiki/Special:WhatLinksHere/Cactus' title='List of all English Wikipedia pages containing links to this page [j]' accesskey='j') What links here
+          li#t-recentchangeslinked
+            a(href='/wiki/Special:RecentChangesLinked/Cactus' rel='nofollow' title='Recent changes in pages linked from this page [k]' accesskey='k') Related changes
+          li#t-upload
+            a(href='/wiki/Wikipedia:File_Upload_Wizard' title='Upload files [u]' accesskey='u') Upload file
+          li#t-specialpages
+            a(href='/wiki/Special:SpecialPages' title='A list of all special pages [q]' accesskey='q') Special pages
+          li#t-permalink
+            a(href='/w/index.php?title=Cactus&oldid=987318248' title='Permanent link to this revision of this page') Permanent link
+          li#t-info
+            a(href='/w/index.php?title=Cactus&action=info' title='More information about this page') Page information
+          li#t-cite
+            a(href='/w/index.php?title=Special:CiteThisPage&page=Cactus&id=987318248&wpFormIdentifier=titleform' title='Information on how to cite this page') Cite this page
+          li#t-wikibase
+            a(href='https://www.wikidata.org/wiki/Special:EntityPage/Q14560' title='Structured data on this page hosted by Wikidata [g]' accesskey='g') Wikidata item
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-coll-print_export.mw-portlet.mw-portlet-coll-print_export.vector-menu.vector-menu-portal.portal(aria-labelledby='p-coll-print_export-label' role='navigation')
+      h3#p-coll-print_export-label
+        span Print/export
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li#coll-download-as-rl
+            a(href='/w/index.php?title=Special:DownloadAsPdf&page=Cactus&action=show-download-screen' title='Download this page as a PDF file') Download as PDF
+          li#t-print
+            a(href='/w/index.php?title=Cactus&printable=yes' title='Printable version of this page [p]' accesskey='p') Printable version
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-wikibase-otherprojects.mw-portlet.mw-portlet-wikibase-otherprojects.vector-menu.vector-menu-portal.portal(aria-labelledby='p-wikibase-otherprojects-label' role='navigation')
+      h3#p-wikibase-otherprojects-label
+        span In other projects
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li.wb-otherproject-link.wb-otherproject-commons
+            a(href='https://commons.wikimedia.org/wiki/Category:Cactaceae' hreflang='en') Wikimedia Commons
+          li.wb-otherproject-link.wb-otherproject-species
+            a(href='https://species.wikimedia.org/wiki/Cactaceae' hreflang='en') Wikispecies
+    // Please do not use role attribute as CSS selector, it is deprecated.
+    nav#p-lang.mw-portlet.mw-portlet-lang.vector-menu.vector-menu-portal.portal(aria-labelledby='p-lang-label' role='navigation')
+      h3#p-lang-label
+        span Languages
+      .vector-menu-content
+        ul.vector-menu-content-list
+          li.interlanguage-link.interwiki-af
+            a.interlanguage-link-target(href='https://af.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Afrikaans' hreflang='af' lang='af') Afrikaans
+          li.interlanguage-link.interwiki-ar
+            a.interlanguage-link-target(href='https://ar.wikipedia.org/wiki/%D8%B5%D8%A8%D8%A7%D8%B1' title='صبار – Arabic' hreflang='ar' lang='ar') &#x627;&#x644;&#x639;&#x631;&#x628;&#x64A;&#x629;
+          li.interlanguage-link.interwiki-as
+            a.interlanguage-link-target(href='https://as.wikipedia.org/wiki/%E0%A6%95%E0%A7%87%E0%A6%95%E0%A7%8D%E2%80%8C%E0%A6%9F%E0%A6%BE%E0%A6%9B' title='কেক্‌টাছ – Assamese' hreflang='as' lang='as') &#x985;&#x9B8;&#x9AE;&#x9C0;&#x9AF;&#x9BC;&#x9BE;
+          li.interlanguage-link.interwiki-ast
+            a.interlanguage-link-target(href='https://ast.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Asturian' hreflang='ast' lang='ast') Asturianu
+          li.interlanguage-link.interwiki-ay
+            a.interlanguage-link-target(href='https://ay.wikipedia.org/wiki/Achaka%C3%B1a' title='Achakaña – Aymara' hreflang='ay' lang='ay') Aymar aru
+          li.interlanguage-link.interwiki-az
+            a.interlanguage-link-target(href='https://az.wikipedia.org/wiki/Kaktuskimil%C9%99r' title='Kaktuskimilər – Azerbaijani' hreflang='az' lang='az') Az&#x259;rbaycanca
+          li.interlanguage-link.interwiki-bn
+            a.interlanguage-link-target(href='https://bn.wikipedia.org/wiki/%E0%A6%95%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A7%8D%E2%80%8C%E0%A6%9F%E0%A6%BE%E0%A6%B8' title='ক্যাক্‌টাস – Bangla' hreflang='bn' lang='bn') &#x9AC;&#x9BE;&#x982;&#x9B2;&#x9BE;
+          li.interlanguage-link.interwiki-zh-min-nan
+            a.interlanguage-link-target(href='https://zh-min-nan.wikipedia.org/wiki/Sian-j%C3%AEn-chi%C3%B3ng' title='Sian-jîn-chióng – Chinese (Min Nan)' hreflang='nan' lang='nan') B&acirc;n-l&acirc;m-g&uacute;
+          li.interlanguage-link.interwiki-be
+            a.interlanguage-link-target(href='https://be.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D1%8B' title='Кактусы – Belarusian' hreflang='be' lang='be') &Bcy;&iecy;&lcy;&acy;&rcy;&ucy;&scy;&kcy;&acy;&yacy;
+          li.interlanguage-link.interwiki-be-x-old
+            a.interlanguage-link-target(href='https://be-tarask.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D1%8B' title='Кактусы – Belarusian (Taraškievica orthography)' hreflang='be-tarask' lang='be-tarask') &Bcy;&iecy;&lcy;&acy;&rcy;&ucy;&scy;&kcy;&acy;&yacy; (&tcy;&acy;&rcy;&acy;&shcy;&kcy;&iecy;&vcy;&iukcy;&tscy;&acy;)&lrm;
+          li.interlanguage-link.interwiki-bg
+            a.interlanguage-link-target(href='https://bg.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2%D0%B8' title='Кактусови – Bulgarian' hreflang='bg' lang='bg') &Bcy;&hardcy;&lcy;&gcy;&acy;&rcy;&scy;&kcy;&icy;
+          li.interlanguage-link.interwiki-bar
+            a.interlanguage-link-target(href='https://bar.wikipedia.org/wiki/Kakteengwachsa' title='Kakteengwachsa – Bavarian' hreflang='bar' lang='bar') Boarisch
+          li.interlanguage-link.interwiki-bo
+            a.interlanguage-link-target(href='https://bo.wikipedia.org/wiki/%E0%BD%80%E0%BE%B3%E0%BD%B4%E0%BC%8B%E0%BD%A5%E0%BD%B2%E0%BD%84%E0%BC%8B' title='ཀླུ་ཥིང་ – Tibetan' hreflang='bo' lang='bo') &#xF56;&#xF7C;&#xF51;&#xF0B;&#xF61;&#xF72;&#xF42;
+          li.interlanguage-link.interwiki-bs
+            a.interlanguage-link-target(href='https://bs.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Bosnian' hreflang='bs' lang='bs') Bosanski
+          li.interlanguage-link.interwiki-ca
+            a.interlanguage-link-target(href='https://ca.wikipedia.org/wiki/Cactus' title='Cactus – Catalan' hreflang='ca' lang='ca') Catal&agrave;
+          li.interlanguage-link.interwiki-ceb
+            a.interlanguage-link-target(href='https://ceb.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Cebuano' hreflang='ceb' lang='ceb') Cebuano
+          li.interlanguage-link.interwiki-cs
+            a.interlanguage-link-target(href='https://cs.wikipedia.org/wiki/Kaktusovit%C3%A9' title='Kaktusovité – Czech' hreflang='cs' lang='cs') &Ccaron;e&scaron;tina
+          li.interlanguage-link.interwiki-cy
+            a.interlanguage-link-target(href='https://cy.wikipedia.org/wiki/Cactws' title='Cactws – Welsh' hreflang='cy' lang='cy') Cymraeg
+          li.interlanguage-link.interwiki-da
+            a.interlanguage-link-target(href='https://da.wikipedia.org/wiki/Kaktus-familien' title='Kaktus-familien – Danish' hreflang='da' lang='da') Dansk
+          li.interlanguage-link.interwiki-de
+            a.interlanguage-link-target(href='https://de.wikipedia.org/wiki/Kakteengew%C3%A4chse' title='Kakteengewächse – German' hreflang='de' lang='de') Deutsch
+          li.interlanguage-link.interwiki-et
+            a.interlanguage-link-target(href='https://et.wikipedia.org/wiki/Kaktuselised' title='Kaktuselised – Estonian' hreflang='et' lang='et') Eesti
+          li.interlanguage-link.interwiki-el
+            a.interlanguage-link-target(href='https://el.wikipedia.org/wiki/%CE%9A%CE%AC%CE%BA%CF%84%CE%BF%CF%82' title='Κάκτος – Greek' hreflang='el' lang='el') &Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#x3AC;
+          li.interlanguage-link.interwiki-es
+            a.interlanguage-link-target(href='https://es.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Spanish' hreflang='es' lang='es') Espa&ntilde;ol
+          li.interlanguage-link.interwiki-eo
+            a.interlanguage-link-target(href='https://eo.wikipedia.org/wiki/Kaktacoj' title='Kaktacoj – Esperanto' hreflang='eo' lang='eo') Esperanto
+          li.interlanguage-link.interwiki-eu
+            a.interlanguage-link-target(href='https://eu.wikipedia.org/wiki/Kaktus' title='Kaktus – Basque' hreflang='eu' lang='eu') Euskara
+          li.interlanguage-link.interwiki-fa
+            a.interlanguage-link-target(href='https://fa.wikipedia.org/wiki/%DA%A9%D8%A7%DA%A9%D8%AA%D9%88%D8%B3' title='کاکتوس – Persian' hreflang='fa' lang='fa') &#x641;&#x627;&#x631;&#x633;&#x6CC;
+          li.interlanguage-link.interwiki-fo
+            a.interlanguage-link-target(href='https://fo.wikipedia.org/wiki/Kaktus' title='Kaktus – Faroese' hreflang='fo' lang='fo') F&oslash;royskt
+          li.interlanguage-link.interwiki-fr
+            a.interlanguage-link-target(href='https://fr.wikipedia.org/wiki/Cactaceae' title='Cactaceae – French' hreflang='fr' lang='fr') Fran&ccedil;ais
+          li.interlanguage-link.interwiki-ga
+            a.interlanguage-link-target(href='https://ga.wikipedia.org/wiki/Cachtas' title='Cachtas – Irish' hreflang='ga' lang='ga') Gaeilge
+          li.interlanguage-link.interwiki-gl
+            a.interlanguage-link-target(href='https://gl.wikipedia.org/wiki/Cacto' title='Cacto – Galician' hreflang='gl' lang='gl') Galego
+          li.interlanguage-link.interwiki-gu
+            a.interlanguage-link-target(href='https://gu.wikipedia.org/wiki/%E0%AA%A5%E0%AB%8B%E0%AA%B0' title='થોર – Gujarati' hreflang='gu' lang='gu') &#xA97;&#xAC1;&#xA9C;&#xAB0;&#xABE;&#xAA4;&#xAC0;
+          li.interlanguage-link.interwiki-ko
+            a.interlanguage-link-target(href='https://ko.wikipedia.org/wiki/%EC%84%A0%EC%9D%B8%EC%9E%A5' title='선인장 – Korean' hreflang='ko' lang='ko') &#xD55C;&#xAD6D;&#xC5B4;
+          li.interlanguage-link.interwiki-hy
+            a.interlanguage-link-target(href='https://hy.wikipedia.org/wiki/%D4%BF%D5%A1%D5%AF%D5%BF%D5%B8%D6%82%D5%BD%D5%B6%D5%A5%D6%80' title='Կակտուսներ – Armenian' hreflang='hy' lang='hy') &#x540;&#x561;&#x575;&#x565;&#x580;&#x565;&#x576;
+          li.interlanguage-link.interwiki-hi
+            a.interlanguage-link-target(href='https://hi.wikipedia.org/wiki/%E0%A4%95%E0%A5%88%E0%A4%95%E0%A5%8D%E0%A4%9F%E0%A4%B8' title='कैक्टस – Hindi' hreflang='hi' lang='hi') &#x939;&#x93F;&#x928;&#x94D;&#x926;&#x940;
+          li.interlanguage-link.interwiki-hsb
+            a.interlanguage-link-target(href='https://hsb.wikipedia.org/wiki/Kaktusowe_rostliny' title='Kaktusowe rostliny – Upper Sorbian' hreflang='hsb' lang='hsb') Hornjoserbsce
+          li.interlanguage-link.interwiki-hr
+            a.interlanguage-link-target(href='https://hr.wikipedia.org/wiki/Kaktusi' title='Kaktusi – Croatian' hreflang='hr' lang='hr') Hrvatski
+          li.interlanguage-link.interwiki-io
+            a.interlanguage-link-target(href='https://io.wikipedia.org/wiki/Kaktuso' title='Kaktuso – Ido' hreflang='io' lang='io') Ido
+          li.interlanguage-link.interwiki-id
+            a.interlanguage-link-target(href='https://id.wikipedia.org/wiki/Kaktus' title='Kaktus – Indonesian' hreflang='id' lang='id') Bahasa Indonesia
+          li.interlanguage-link.interwiki-is
+            a.interlanguage-link-target(href='https://is.wikipedia.org/wiki/Kaktusar' title='Kaktusar – Icelandic' hreflang='is' lang='is') &Iacute;slenska
+          li.interlanguage-link.interwiki-it
+            a.interlanguage-link-target(href='https://it.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Italian' hreflang='it' lang='it') Italiano
+          li.interlanguage-link.interwiki-he
+            a.interlanguage-link-target(href='https://he.wikipedia.org/wiki/%D7%A6%D7%91%D7%A8%D7%99%D7%99%D7%9D' title='צבריים – Hebrew' hreflang='he' lang='he') &#x5E2;&#x5D1;&#x5E8;&#x5D9;&#x5EA;
+          li.interlanguage-link.interwiki-jv
+            a.interlanguage-link-target(href='https://jv.wikipedia.org/wiki/Kaktus' title='Kaktus – Javanese' hreflang='jv' lang='jv') Jawa
+          li.interlanguage-link.interwiki-kn
+            a.interlanguage-link-target(href='https://kn.wikipedia.org/wiki/%E0%B2%95%E0%B2%B3%E0%B3%8D%E0%B2%B3%E0%B2%BF_%E0%B2%97%E0%B2%BF%E0%B2%A1' title='ಕಳ್ಳಿ ಗಿಡ – Kannada' hreflang='kn' lang='kn') &#xC95;&#xCA8;&#xCCD;&#xCA8;&#xCA1;
+          li.interlanguage-link.interwiki-ka
+            a.interlanguage-link-target(href='https://ka.wikipedia.org/wiki/%E1%83%99%E1%83%90%E1%83%A5%E1%83%A2%E1%83%A3%E1%83%A1%E1%83%98%E1%83%A1%E1%83%94%E1%83%91%E1%83%A0%E1%83%9C%E1%83%98' title='კაქტუსისებრნი – Georgian' hreflang='ka' lang='ka') &#x10E5;&#x10D0;&#x10E0;&#x10D7;&#x10E3;&#x10DA;&#x10D8;
+          li.interlanguage-link.interwiki-kk
+            a.interlanguage-link-target(href='https://kk.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81' title='Кактус – Kazakh' hreflang='kk' lang='kk') &#x49A;&acy;&zcy;&acy;&#x49B;&shcy;&acy;
+          li.interlanguage-link.interwiki-ky
+            a.interlanguage-link-target(href='https://ky.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81' title='Кактус – Kyrgyz' hreflang='ky' lang='ky') &Kcy;&ycy;&rcy;&gcy;&ycy;&zcy;&chcy;&acy;
+          li.interlanguage-link.interwiki-la
+            a.interlanguage-link-target(href='https://la.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Latin' hreflang='la' lang='la') Latina
+          li.interlanguage-link.interwiki-lv
+            a.interlanguage-link-target(href='https://lv.wikipedia.org/wiki/Kaktusu_dzimta' title='Kaktusu dzimta – Latvian' hreflang='lv' lang='lv') Latvie&scaron;u
+          li.interlanguage-link.interwiki-lt
+            a.interlanguage-link-target(href='https://lt.wikipedia.org/wiki/Kaktusiniai' title='Kaktusiniai – Lithuanian' hreflang='lt' lang='lt') Lietuvi&uogon;
+          li.interlanguage-link.interwiki-hu
+            a.interlanguage-link-target(href='https://hu.wikipedia.org/wiki/Kaktuszf%C3%A9l%C3%A9k' title='Kaktuszfélék – Hungarian' hreflang='hu' lang='hu') Magyar
+          li.interlanguage-link.interwiki-mk
+            a.interlanguage-link-target(href='https://mk.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%B8' title='Кактуси – Macedonian' hreflang='mk' lang='mk') &Mcy;&acy;&kcy;&iecy;&dcy;&ocy;&ncy;&scy;&kcy;&icy;
+          li.interlanguage-link.interwiki-mg
+            a.interlanguage-link-target(href='https://mg.wikipedia.org/wiki/Raketa' title='Raketa – Malagasy' hreflang='mg' lang='mg') Malagasy
+          li.interlanguage-link.interwiki-ml
+            a.interlanguage-link-target(href='https://ml.wikipedia.org/wiki/%E0%B4%95%E0%B4%BE%E0%B4%95%E0%B5%8D%E0%B4%9F%E0%B5%87%E0%B4%B8%E0%B5%80' title='കാക്ടേസീ – Malayalam' hreflang='ml' lang='ml') &#xD2E;&#xD32;&#xD2F;&#xD3E;&#xD33;&#xD02;
+          li.interlanguage-link.interwiki-mr
+            a.interlanguage-link-target(href='https://mr.wikipedia.org/wiki/%E0%A4%A8%E0%A4%BF%E0%A4%B5%E0%A4%A1%E0%A5%81%E0%A4%82%E0%A4%97' title='निवडुंग – Marathi' hreflang='mr' lang='mr') &#x92E;&#x930;&#x93E;&#x920;&#x940;
+          li.interlanguage-link.interwiki-xmf
+            a.interlanguage-link-target(href='https://xmf.wikipedia.org/wiki/%E1%83%99%E1%83%90%E1%83%A5%E1%83%A2%E1%83%A3%E1%83%A1%E1%83%98%E1%83%A8%E1%83%9D%E1%83%91%E1%83%A3%E1%83%A0%E1%83%94%E1%83%A4%E1%83%98' title='კაქტუსიშობურეფი – Mingrelian' hreflang='xmf' lang='xmf') &#x10DB;&#x10D0;&#x10E0;&#x10D2;&#x10D0;&#x10DA;&#x10E3;&#x10E0;&#x10D8;
+          li.interlanguage-link.interwiki-ms
+            a.interlanguage-link-target(href='https://ms.wikipedia.org/wiki/Kaktus' title='Kaktus – Malay' hreflang='ms' lang='ms') Bahasa Melayu
+          li.interlanguage-link.interwiki-cdo
+            a.interlanguage-link-target(href='https://cdo.wikipedia.org/wiki/Si%C4%95ng-%C3%ACng-ci%C5%8Dng' title='Siĕng-ìng-ciōng – Min Dong Chinese' hreflang='cdo' lang='cdo') M&igrave;ng-d&#x115;&#x324;ng-ng&#x1E73;&#x304;
+          li.interlanguage-link.interwiki-nl
+            a.interlanguage-link-target(href='https://nl.wikipedia.org/wiki/Cactusfamilie' title='Cactusfamilie – Dutch' hreflang='nl' lang='nl') Nederlands
+          li.interlanguage-link.interwiki-new
+            a.interlanguage-link-target(href='https://new.wikipedia.org/wiki/%E0%A4%95%E0%A4%82%E0%A4%AE%E0%A4%BE' title='कंमा – Newari' hreflang='new' lang='new') &#x928;&#x947;&#x92A;&#x93E;&#x932; &#x92D;&#x93E;&#x937;&#x93E;
+          li.interlanguage-link.interwiki-ja
+            a.interlanguage-link-target(href='https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9C%E3%83%86%E3%83%B3' title='サボテン – Japanese' hreflang='ja' lang='ja') &#x65E5;&#x672C;&#x8A9E;
+          li.interlanguage-link.interwiki-frr
+            a.interlanguage-link-target(href='https://frr.wikipedia.org/wiki/Kakteen' title='Kakteen – Northern Frisian' hreflang='frr' lang='frr') Nordfriisk
+          li.interlanguage-link.interwiki-no
+            a.interlanguage-link-target(href='https://no.wikipedia.org/wiki/Kaktusfamilien' title='Kaktusfamilien – Norwegian Bokmål' hreflang='nb' lang='nb') Norsk bokm&aring;l
+          li.interlanguage-link.interwiki-nn
+            a.interlanguage-link-target(href='https://nn.wikipedia.org/wiki/Kaktus' title='Kaktus – Norwegian Nynorsk' hreflang='nn' lang='nn') Norsk nynorsk
+          li.interlanguage-link.interwiki-oc
+            a.interlanguage-link-target(href='https://oc.wikipedia.org/wiki/Cactus' title='Cactus – Occitan' hreflang='oc' lang='oc') Occitan
+          li.interlanguage-link.interwiki-or
+            a.interlanguage-link-target(href='https://or.wikipedia.org/wiki/%E0%AC%A8%E0%AC%BE%E0%AC%97%E0%AC%AB%E0%AD%87%E0%AC%A3%E0%AD%80_%E0%AC%97%E0%AC%9B' title='ନାଗଫେଣୀ ଗଛ – Odia' hreflang='or' lang='or') &#xB13;&#xB21;&#xB3C;&#xB3F;&#xB06;
+          li.interlanguage-link.interwiki-uz
+            a.interlanguage-link-target(href='https://uz.wikipedia.org/wiki/Kaktuslar' title='Kaktuslar – Uzbek' hreflang='uz' lang='uz') O&#x2BB;zbekcha/&ubrcy;&zcy;&bcy;&iecy;&kcy;&chcy;&acy;
+          li.interlanguage-link.interwiki-pa
+            a.interlanguage-link-target(href='https://pa.wikipedia.org/wiki/%E0%A8%A5%E0%A9%8B%E0%A8%B9%E0%A8%B0' title='ਥੋਹਰ – Punjabi' hreflang='pa' lang='pa') &#xA2A;&#xA70;&#xA1C;&#xA3E;&#xA2C;&#xA40;
+          li.interlanguage-link.interwiki-pnb
+            a.interlanguage-link-target(href='https://pnb.wikipedia.org/wiki/%D8%AA%DA%BE%D9%88%D8%B1' title='تھور – Western Punjabi' hreflang='pnb' lang='pnb') &#x67E;&#x646;&#x62C;&#x627;&#x628;&#x6CC;
+          li.interlanguage-link.interwiki-pl.badge-Q17437796.badge-featuredarticle(title='featured article badge')
+            a.interlanguage-link-target(href='https://pl.wikipedia.org/wiki/Kaktusowate' title='Kaktusowate – Polish' hreflang='pl' lang='pl') Polski
+          li.interlanguage-link.interwiki-pt
+            a.interlanguage-link-target(href='https://pt.wikipedia.org/wiki/Cactaceae' title='Cactaceae – Portuguese' hreflang='pt' lang='pt') Portugu&ecirc;s
+          li.interlanguage-link.interwiki-ro
+            a.interlanguage-link-target(href='https://ro.wikipedia.org/wiki/Cactus' title='Cactus – Romanian' hreflang='ro' lang='ro') Rom&acirc;n&abreve;
+          li.interlanguage-link.interwiki-qu
+            a.interlanguage-link-target(href='https://qu.wikipedia.org/wiki/Waraqu_yura_rikch%27aq_ayllu' title="Waraqu yura rikch'aq ayllu – Quechua" hreflang='qu' lang='qu') Runa Simi
+          li.interlanguage-link.interwiki-ru
+            a.interlanguage-link-target(href='https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2%D1%8B%D0%B5' title='Кактусовые – Russian' hreflang='ru' lang='ru') &Rcy;&ucy;&scy;&scy;&kcy;&icy;&jcy;
+          li.interlanguage-link.interwiki-sco
+            a.interlanguage-link-target(href='https://sco.wikipedia.org/wiki/Cactus' title='Cactus – Scots' hreflang='sco' lang='sco') Scots
+          li.interlanguage-link.interwiki-stq
+            a.interlanguage-link-target(href='https://stq.wikipedia.org/wiki/Kakteen' title='Kakteen – Saterland Frisian' hreflang='stq' lang='stq') Seeltersk
+          li.interlanguage-link.interwiki-sq
+            a.interlanguage-link-target(href='https://sq.wikipedia.org/wiki/Kaktusi' title='Kaktusi – Albanian' hreflang='sq' lang='sq') Shqip
+          li.interlanguage-link.interwiki-simple
+            a.interlanguage-link-target(href='https://simple.wikipedia.org/wiki/Cactus' title='Cactus – Simple English' hreflang='en-simple' lang='en-simple') Simple English
+          li.interlanguage-link.interwiki-sd
+            a.interlanguage-link-target(href='https://sd.wikipedia.org/wiki/%DA%AA%D8%A7%DA%AA%D9%BD%D8%B3' title='ڪاڪٽس – Sindhi' hreflang='sd' lang='sd') &#x633;&#x646;&#x68C;&#x64A;
+          li.interlanguage-link.interwiki-sk
+            a.interlanguage-link-target(href='https://sk.wikipedia.org/wiki/Opunciovit%C3%A9' title='Opunciovité – Slovak' hreflang='sk' lang='sk') Sloven&ccaron;ina
+          li.interlanguage-link.interwiki-sl
+            a.interlanguage-link-target(href='https://sl.wikipedia.org/wiki/Kaktusi' title='Kaktusi – Slovenian' hreflang='sl' lang='sl') Sloven&scaron;&ccaron;ina
+          li.interlanguage-link.interwiki-sr
+            a.interlanguage-link-target(href='https://sr.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81' title='Кактус – Serbian' hreflang='sr' lang='sr') &Scy;&rcy;&pcy;&scy;&kcy;&icy; / srpski
+          li.interlanguage-link.interwiki-sh
+            a.interlanguage-link-target(href='https://sh.wikipedia.org/wiki/Kaktus' title='Kaktus – Serbo-Croatian' hreflang='sh' lang='sh') Srpskohrvatski / &scy;&rcy;&pcy;&scy;&kcy;&ocy;&khcy;&rcy;&vcy;&acy;&tcy;&scy;&kcy;&icy;
+          li.interlanguage-link.interwiki-su
+            a.interlanguage-link-target(href='https://su.wikipedia.org/wiki/Katus' title='Katus – Sundanese' hreflang='su' lang='su') Sunda
+          li.interlanguage-link.interwiki-fi
+            a.interlanguage-link-target(href='https://fi.wikipedia.org/wiki/Kaktuskasvit' title='Kaktuskasvit – Finnish' hreflang='fi' lang='fi') Suomi
+          li.interlanguage-link.interwiki-sv
+            a.interlanguage-link-target(href='https://sv.wikipedia.org/wiki/Kaktusv%C3%A4xter' title='Kaktusväxter – Swedish' hreflang='sv' lang='sv') Svenska
+          li.interlanguage-link.interwiki-tl
+            a.interlanguage-link-target(href='https://tl.wikipedia.org/wiki/Kakto' title='Kakto – Tagalog' hreflang='tl' lang='tl') Tagalog
+          li.interlanguage-link.interwiki-ta
+            a.interlanguage-link-target(href='https://ta.wikipedia.org/wiki/%E0%AE%95%E0%AE%B3%E0%AF%8D%E0%AE%B3%E0%AE%BF' title='கள்ளி – Tamil' hreflang='ta' lang='ta') &#xBA4;&#xBAE;&#xBBF;&#xBB4;&#xBCD;
+          li.interlanguage-link.interwiki-te
+            a.interlanguage-link-target(href='https://te.wikipedia.org/wiki/%E0%B0%95%E0%B0%BE%E0%B0%95%E0%B1%8D%E0%B0%9F%E0%B1%87%E0%B0%B8%E0%B0%BF' title='కాక్టేసి – Telugu' hreflang='te' lang='te') &#xC24;&#xC46;&#xC32;&#xC41;&#xC17;&#xC41;
+          li.interlanguage-link.interwiki-th
+            a.interlanguage-link-target(href='https://th.wikipedia.org/wiki/%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3' title='กระบองเพชร – Thai' hreflang='th' lang='th') &#xE44;&#xE17;&#xE22;
+          li.interlanguage-link.interwiki-tg
+            a.interlanguage-link-target(href='https://tg.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81' title='Кактус – Tajik' hreflang='tg' lang='tg') &Tcy;&ocy;&#x4B7;&icy;&kcy;&#x4E3;
+          li.interlanguage-link.interwiki-chy
+            a.interlanguage-link-target(href='https://chy.wikipedia.org/wiki/He%C5%A1k%C3%B3vemata' title='Heškóvemata – Cheyenne' hreflang='chy' lang='chy') Tsets&ecirc;hest&acirc;hese
+          li.interlanguage-link.interwiki-tr
+            a.interlanguage-link-target(href='https://tr.wikipedia.org/wiki/Kakt%C3%BCsgiller' title='Kaktüsgiller – Turkish' hreflang='tr' lang='tr') T&uuml;rk&ccedil;e
+          li.interlanguage-link.interwiki-uk
+            a.interlanguage-link-target(href='https://uk.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2%D1%96' title='Кактусові – Ukrainian' hreflang='uk' lang='uk') &Ucy;&kcy;&rcy;&acy;&yicy;&ncy;&scy;&softcy;&kcy;&acy;
+          li.interlanguage-link.interwiki-za
+            a.interlanguage-link-target(href='https://za.wikipedia.org/wiki/Golinxvaiz' title='Golinxvaiz – Zhuang' hreflang='za' lang='za') Vahcuengh
+          li.interlanguage-link.interwiki-vi
+            a.interlanguage-link-target(href='https://vi.wikipedia.org/wiki/H%E1%BB%8D_X%C6%B0%C6%A1ng_r%E1%BB%93ng' title='Họ Xương rồng – Vietnamese' hreflang='vi' lang='vi') Ti&#x1EBF;ng Vi&#x1EC7;t
+          li.interlanguage-link.interwiki-war
+            a.interlanguage-link-target(href='https://war.wikipedia.org/wiki/Kaktus' title='Kaktus – Waray' hreflang='war' lang='war') Winaray
+          li.interlanguage-link.interwiki-wo
+            a.interlanguage-link-target(href='https://wo.wikipedia.org/wiki/Gargamboose' title='Gargamboose – Wolof' hreflang='wo' lang='wo') Wolof
+          li.interlanguage-link.interwiki-wuu
+            a.interlanguage-link-target(href='https://wuu.wikipedia.org/wiki/%E4%BB%99%E4%BA%BA%E6%8E%8C' title='仙人掌 – Wu Chinese' hreflang='wuu' lang='wuu') &#x5434;&#x8BED;
+          li.interlanguage-link.interwiki-yi
+            a.interlanguage-link-target(href='https://yi.wikipedia.org/wiki/%D7%A7%D7%90%D7%A7%D7%98%D7%95%D7%A1' title='קאקטוס – Yiddish' hreflang='yi' lang='yi') &#x5D9;&#x5D9;&#x5B4;&#x5D3;&#x5D9;&#x5E9;
+          li.interlanguage-link.interwiki-zh-yue
+            a.interlanguage-link-target(href='https://zh-yue.wikipedia.org/wiki/%E4%BB%99%E4%BA%BA%E6%8E%8C' title='仙人掌 – Cantonese' hreflang='yue' lang='yue') &#x7CB5;&#x8A9E;
+          li.interlanguage-link.interwiki-zh
+            a.interlanguage-link-target(href='https://zh.wikipedia.org/wiki/%E4%BB%99%E4%BA%BA%E6%8E%8C' title='仙人掌 – Chinese' hreflang='zh' lang='zh') &#x4E2D;&#x6587;
+        .after-portlet.after-portlet-lang
+          span.wb-langlinks-edit.wb-langlinks-link
+            a.wbc-editpage(href='https://www.wikidata.org/wiki/Special:EntityPage/Q14560#sitelinks-wikipedia' title='Edit interlanguage links') Edit links
+footer#footer.mw-footer(role='contentinfo')
+  ul#footer-info
+    li#footer-info-lastmod
+      | This page (#{id}) was last edited on 6 November 2020, at 07:31
+      span.anonymous-show &nbsp;(UTC) 
+      | .
+    li#footer-info-copyright
+      | Text is available under the 
+      a(rel='license' href='//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License') Creative Commons Attribution-ShareAlike License
+      a(rel='license' href='//creativecommons.org/licenses/by-sa/3.0/' style='display:none;')
+      | ;
+      | additional terms may apply.  By using this site, you agree to the 
+      a(href='//foundation.wikimedia.org/wiki/Terms_of_Use') Terms of Use
+      |  and 
+      a(href='//foundation.wikimedia.org/wiki/Privacy_policy') Privacy Policy
+      | . Wikipedia&reg; is a registered trademark of the 
+      a(href='//www.wikimediafoundation.org/') Wikimedia Foundation, Inc.
+      | , a non-profit organization. All page information comes from wikipeda.org and not this site.
+  ul#footer-places
+    li#footer-places-privacy
+      a.extiw(href='https://foundation.wikimedia.org/wiki/Privacy_policy' title='wmf:Privacy policy') Privacy policy
+    li#footer-places-about
+      a(href='/wiki/Wikipedia:About' title='Wikipedia:About') About Wikipedia
+    li#footer-places-disclaimer
+      a(href='/wiki/Wikipedia:General_disclaimer' title='Wikipedia:General disclaimer') Disclaimers
+    li#footer-places-contact
+      a(href='//en.wikipedia.org/wiki/Wikipedia:Contact_us') Contact Wikipedia
+    li#footer-places-mobileview
+      a.noprint.stopMobileRedirectToggle(href='//en.m.wikipedia.org/w/index.php?title=Cactus&mobileaction=toggle_view_mobile') Mobile view
+    li#footer-places-developers
+      a(href='https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute') Developers
+    li#footer-places-statslink
+      a(href='https://stats.wikimedia.org/#/en.wikipedia.org') Statistics
+    li#footer-places-cookiestatement
+      a(href='https://foundation.wikimedia.org/wiki/Cookie_statement') Cookie statement
+  div(style='clear: both;')
+script.
+  let socket = io();
+  function send() {
+    socket.emit('msg', {user: document.getElementById("user").value, msg: document.getElementById("msg").value, id: String(#{id}n)});
+    document.getElementById("msg").value = "";
+  }
+  socket.on('d_msg', function(msg){
+    if (msg.id != #{id}) {
+      return
+    }
+    let messages = document.getElementById("messages");
+    //append to elements in message (li), delete first if more then 15 messages
+    let li = document.createElement("li");
+    let b = document.createElement("span");
+    let p = document.createElement("span");
+    b.innerHTML = msg.user+": ";
+    p.innerHTML = msg.content;
+    b.class = "tocnumber"
+    p.class = "toctext"
+    li.appendChild(b)
+    li.appendChild(p)
+    messages.appendChild(li);
+  });
+  function toggle_hide() {
+    let hide = document.getElementById("hide");
+    let messages = document.getElementById("messages");
+    if (messages.style.display == "none") {
+      messages.style.display = "block";
+      hide.innerHTML = "hide";
+    } else {
+      messages.style.display = "none";
+      hide.innerHTML = "show";
+    }
+  }
+  document.title = "#{title}";

@@ -1,0 +1,212 @@
+<html>
+<head>
+    <title>Googoh Docs</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="docs.css">
+  </head>
+<body>
+<style type="text/css" media="print">
+   .no-print { display: none; }
+   .hidden-print { display: block; }
+</style>
+<div id="top-bar" style="width: 100%; position:fixed; top: 0; background-color: white;" class="no-print">
+  <div id="top">
+   <h1 id="docname">Sample Text</h1>
+   <input type="button" value="File">
+   <input type="button" value="Edit">
+   <input type="button" value="View">
+   <input type="button" value="Insert">
+   <input type="button" value="Format">
+   <input type="button" value="Tools">
+   <input type="button" value="Cheeseburger">
+   <input type="button" value="Help">
+   <button id="share" onclick="document.getElementById('share-modal').style.display = 'block';">Share</button>
+  </div>
+  <div id="buttons" style="width: 100%;">
+    <input type="button" value="↶">
+    <input type="button" value="↷">
+    <select id="text-type">
+      <option id="normal">Normal Text</option>
+    </select>
+    <select id="fonts">
+      <option id="arial">Arial</option>
+      <option id="times">Times New Roman</option>
+      <option id="comic">Comic Sans</option>
+      <option id="sans">Sans Serif</option>
+      <option id="helvetica">Helvetica</option>
+      <option id="missile">RSS-40 Buran Intercontinental Ballistic Missile</option>
+    </select>
+    <input type="button" value="B" style="font-weight:bold;">
+    <input type="button" value="I" style="font-style: italic;">
+    <input type="button" value="U" style="text-decoration:underline;">
+    <input type="number" id="fsize" min="1" max="99" value="12" onchange="sixbynine()"> 
+    <input type="button" id="link" value="🔗">
+    <input type="button" id="chat" value="💬" onclick="send()">
+    <select id="mode" onchange="mode_change()">
+      <option id="edit">Editing Mode</option>
+      <option id="comment">Comment Mode</option>
+      <option id="view">View Mode</option>
+      <option id="plagiarism">Plagiarism Mode</option>
+      <option id="depeche">Depeche Mode</option>
+      <option id="sub">Submarine Mode</option>
+      
+      <option id="sub1" style="display: none;">Submerge</option>
+      <option id="sub2" style="display: none;">Dive</option>
+      <option id="sub3" style="display: none;">Fire Torpedo</option>
+      <option id="sub4" style="display: none;">Resurface</option>
+      <option id="sub5" style="display: none;">Surrender</option>
+      <option id="substatus" style="display: none;"></option>
+    </select>
+    <input type="text" placeholder="Search" id="msg"></text>
+  </div>
+</div>
+
+<div id="share-modal" style="width: 100%; height: 100%; position: fixed; display: none;" class="no-print">
+  <div style="width: 100%; height: 100%; opacity: 0.6; background-color: black;" id="share-modal"></div>
+  <div class="modal">
+    <span class="close" onclick="document.getElementById('share-modal').style.display = 'none';">&times;</span>
+    <h2>Share</h2>
+    <input type="radio" id="share1" name="share" value="doc">
+    <label for="age1">Document</label><br>
+    <input type="radio" id="share2" name="share" value="ccn">
+    <label for="age2">Credit Card Number</label><br>  
+    <input type="radio" id="share3" name="share" value="nc">
+    <label for="age3">Classified Information</label><br>
+      
+    <p>With....</p>
+    <input type="radio" id="with1" name="with" value="link">
+    <label for="with1">Everyone with this link</label><br>
+    <input type="radio" id="with2" name="with" value="cl">
+    <label for="with2">Everyone on my Contact List</label><br>  
+    <input type="radio" id="with3" name="with" value="gad">
+    <label for="with3">Government Agencies (Domestic)</label><br> 
+    <input type="radio" id="with4" name="with" value="gaf">
+    <label for="with3">Government Agencies (Foreign)</label><br> 
+    <input type="radio" id="with5" name="with" value="ac">
+    <label for="with3">Advertising Corporations</label><br> 
+    <input type="radio" id="with6" name="with" value="yt">
+    <label for="with3">Youtube</label><br>
+    <input type="radio" id="with7" name="with" value="met">
+    <label for="with3">The Metropolitan Museum of Art</label><br>
+  </div>
+</div>
+<div id="document">
+  <center>
+    <b style="display: none;" class="hidden-print">Insert Hidden Message</b>
+    <p style="display: none;" class="hidden-print">Made by @rediar on Repl.it! </p>
+    <textarea id="top-text" disabled></textarea>
+  </center>
+</div>
+
+  <script>
+    let text = "Lorem ipsum something something latin mutiliated text ipsum lorem ipsum lorem ipsum lorem sample text";
+    let letter = 0;
+    document.addEventListener("keyup", function(event) {
+      let txt = document.getElementById("top-text");
+      if (letter >= text.length) {
+        txt.innerHTML = "";
+        letter = 0;
+      } else {
+        txt.innerHTML = txt.innerHTML+text[letter];
+        letter++;
+      }
+    });
+
+    function sixbynine() {
+      if (document.getElementById("fsize").value == "42") {
+        alert("How many roads must a man walk down?");
+      }
+    }
+
+    document.getElementById("msg").addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        send();
+      }
+    });
+
+    let msg_collect = 0;
+    let msg_list = [];
+    let socket = io();
+    socket.on('d_msg', function(msg) {
+      let messages = document.getElementById("text-type");
+      let o = document.createElement("option");
+      let b = document.createElement("b");
+      b.innerHTML = msg.user+": ";
+      o.appendChild(b);
+      o.innerHTML = o.innerHTML+msg.content;
+      messages.appendChild(o);
+      msg_collect++;
+      messages.id = "m"+String(msg_collect);
+      msg_list.push("m"+String(msg_collect));
+      if (msg_list.length > 5) {
+        while (msg_list.length > 5) {
+          document.getElementById(msg_list[0]).remove();
+          msg_list.splice(0, 1);
+        }
+      }
+    });
+
+    function send() {
+      socket.emit('msg', {user: document.getElementById("user").value, msg: document.getElementById("msg").value});
+      document.getElementById("msg").value = "";
+    }
+
+    let status = "surfaced";
+    let ships_sunk = 0;
+    function mode_change() {
+      //submarine game
+      let sub = ["sub1","sub2","sub3","sub4","sub5","substatus"];
+      let nonsub = ["edit","comment","view","plagiarism","depeche"];
+      if (document.getElementById("mode").value == "Submarine Mode") {
+        let s1 = document.getElementById("sub1").style.display;
+        console.log(s1)
+        if (s1 == "none") {
+          for (i = 0; i < sub.length; i++) {
+            let e = sub[i];
+            document.getElementById(e).style.display = "block";
+          }
+          for (i = 0; i < sub.length; i++) {
+            let e = nonsub[i];
+            document.getElementById(e).style.display = "none";
+          }
+        } 
+      } else if (document.getElementById("mode").value == "Surrender") {
+          for (i = 0; i < sub.length; i++) {
+            let e = sub[i];
+            document.getElementById(e).style.display = "none";
+          }
+          for (i = 0; i < sub.length; i++) {
+            let e = nonsub[i];
+            document.getElementById(e).style.display = "block";
+          }      
+      } else if (document.getElementById("mode").value == "Resurface") {
+        if (status == "surfaced") {
+
+        } else {
+          status = "surfaced";
+        }
+      } else if (document.getElementById("mode").value == "Submerge") {
+        if (status == "submerged") {
+
+        } else {
+          status = "submerged";
+        }
+      } else if (document.getElementById("mode").value == "Dive") {
+        if (status == "deep") {
+
+        } else {
+          status = "deep";
+        }
+      } else if (document.getElementById("mode").value == "Fire Torpedo") {
+        if (status == "submerged") {
+
+        } else {
+          let hit = ["yes","yes","no","no","no"];
+          hit[Math.floor(Math.random() * hit.length)];
+        }
+      }
+      document.getElementById("substatus").innerHTML = "Status: "+status
+   }
+  </script>
+</body>
+</html>

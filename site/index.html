@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Totally Not Discord Proxy Thing</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+      <p id="warning"></p>
+      <br>
+      <label for="channelid">Channel id:</label>
+      <input id="channelid" type="text" placeholder="channel id"></input>
+      <p>Don't have a channel id? Put in <b>777622326208102423</b></p>
+      <br>
+      <button onclick="gotochannel()">Join</button>
+      <br>
+      <b>Want to be able to talk in your server's channels? Invite the bot <a href="https://discord.com/oauth2/authorize?client_id=777674547771080725&scope=bot">here</a></b>
+      <script>
+        let socket = io();
+        function gotochannel() {
+          socket.emit("check",{id: document.getElementById("channelid").value, url: "/chat/"+document.getElementById("channelid").value});
+        }
+        socket.on('check_confirm', function(c) {
+          window.location.href = c.url
+        });
+      </script>
+  </body>

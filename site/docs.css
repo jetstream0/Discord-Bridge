@@ -1,0 +1,49 @@
+#top {
+  border-bottom-style: solid; 
+  border-width: 2px;
+  padding-bottom: 10px;
+}
+#share {
+  float: right;
+}
+.modal {
+  position: fixed;
+  z-index: 1;
+  border-style: solid;
+  border-width: 1px;
+  background-color: white;
+  left: 30%;
+  top: 33%;
+  width: 40%;
+  color: black;
+  padding: 5px;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+#buttons {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom-style: solid; 
+  border-width: 2px;
+}
+#document {
+  margin-top: 10%;
+  background-color: #DCDCDC;
+}
+#top-text {
+  margin-top: 20px;
+}
+textarea {
+  box-shadow: 9px 9px 9px grey, -9px -9px 9px grey;
+  background-color: white;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 60%;
+  height: 100vh;
+  overflow: hidden;
+}

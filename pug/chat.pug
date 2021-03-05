@@ -1,0 +1,40 @@
+doctype html
+head
+  title Totally Not Discord Proxy Thing
+  script(src='/socket.io/socket.io.js')
+div(style='a')
+  button(onclick='window.location.href = window.location.href+"?skin=wikipedia"') Wikipedia Mode
+#messages
+label(for='user') Username:
+input#user(type='text' placeholder='some username here....')
+br
+label(for='msg') Message:
+input#msg(type='text' placeholder='some message here....')
+br
+button(onclick='send()') Send message
+br
+b  Channel id is #{id}
+
+script.
+  document.getElementById("msg").addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      send();
+    }
+  });
+  let socket = io();
+  function send() {
+  socket.emit('msg', {user: document.getElementById("user").value, msg: document.getElementById("msg").value, id: String(#{id}n)});
+  document.getElementById("msg").value = "";
+  }
+  socket.on('d_msg', function(msg){
+  if (msg.id != #{id}) {
+    return 
+  }
+  let messages = document.getElementById("messages");
+  let p = document.createElement("p");
+  let b = document.createElement("b");
+  b.innerHTML = msg.user+": ";
+  p.appendChild(b);
+  p.innerHTML = p.innerHTML+msg.content;
+  messages.appendChild(p);
+  });
