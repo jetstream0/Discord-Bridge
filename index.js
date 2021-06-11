@@ -9,6 +9,7 @@ const {token} = process.env;
 
 client.on('ready', () => {
 	console.log('Ready!');
+  client.user.setActivity('https://discord-proxy.prussia.dev', { type: 'PLAYING' });
 });
 
 client.on('message', async message => {
