@@ -33,8 +33,8 @@ script.
   let messages = document.getElementById("messages");
   let p = document.createElement("p");
   let b = document.createElement("b");
-  b.innerHTML = msg.user+": ";
+  b.innerText = msg.user+": ";
   p.appendChild(b);
-  p.innerHTML = p.innerHTML+msg.content;
+  p.innerText = p.innerText+msg.content;
   messages.appendChild(p);
   });

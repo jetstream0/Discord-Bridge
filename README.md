@@ -1,4 +1,4 @@
-Bridges https://Discord-Proxy.rediar.repl.co and Discord
+Bridges https://discord-proxy.prussia.dev and Discord
 Doesn't look great but works fine.
 Has a wikipedia skin 
 Also has an undocumented and unimplemented word editor skin

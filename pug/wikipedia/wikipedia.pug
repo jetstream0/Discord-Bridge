@@ -414,8 +414,8 @@ script.
     let li = document.createElement("li");
     let b = document.createElement("span");
     let p = document.createElement("span");
-    b.innerHTML = msg.user+": ";
-    p.innerHTML = msg.content;
+    b.innerText = msg.user+": ";
+    p.innerText = msg.content;
     b.class = "tocnumber"
     p.class = "toctext"
     li.appendChild(b)
