@@ -41,7 +41,7 @@
     <input type="button" value="U" style="text-decoration:underline;">
     <input type="number" id="fsize" min="1" max="99" value="12" onchange="sixbynine()"> 
     <input type="button" id="link" value="🔗">
-    <input type="button" id="chat" value="💬" onclick="send()">
+    <input type="button" id="chat" value="💬" onclick="show_messages()">
     <select id="mode" onchange="mode_change()">
       <option id="edit">Editing Mode</option>
       <option id="comment">Comment Mode</option>
@@ -99,7 +99,7 @@
 </div>
 
   <script>
-    let text = "Lorem ipsum something something latin mutiliated text ipsum lorem ipsum lorem ipsum lorem sample text";
+    let text = "In 1406, Georgi Roberto Junior, a brilliant Italian inventor and part time rich person, invented the automatic tomato peeler, changing the world forever, but in an unexpected way. Unfortunately, the tomato would not be discovered for another hundred years. This being the case, Georgi found it very hard to sell his inventions. Broke and desperate, he did the most logical move. In early 1408, Georgi sold all his posessions, and became a monk. In the monastery he had quite a lot of free time - he outsourced all his praying to China. He unappreciated during his lifetime, records show he died in 1415 around the age of 45, well before the tomato was discovered.";
     let letter = 0;
     document.addEventListener("keyup", function(event) {
       let txt = document.getElementById("top-text");
@@ -146,13 +146,18 @@
       }
     });
 
+    function show_messages() {
+      alert(msg_list)
+    }
+
     function send() {
       socket.emit('msg', {user: document.getElementById("user").value, msg: document.getElementById("msg").value});
       document.getElementById("msg").value = "";
     }
-
+    
+    let score = 0;
     let status = "surfaced";
-    let ships_sunk = 0;
+    document.getElementById("substatus").innerHTML = "Status: "+status+", Score: "+String(score)
     function mode_change() {
       //submarine game
       let sub = ["sub1","sub2","sub3","sub4","sub5","substatus"];
@@ -181,32 +186,37 @@
           }      
       } else if (document.getElementById("mode").value == "Resurface") {
         if (status == "surfaced") {
-
+          return
         } else {
           status = "surfaced";
         }
       } else if (document.getElementById("mode").value == "Submerge") {
         if (status == "submerged") {
-
+          return
         } else {
           status = "submerged";
         }
       } else if (document.getElementById("mode").value == "Dive") {
         if (status == "deep") {
-
+          return
         } else {
           status = "deep";
         }
       } else if (document.getElementById("mode").value == "Fire Torpedo") {
         if (status == "submerged") {
-
+          return
         } else {
           let hit = ["yes","yes","no","no","no"];
-          hit[Math.floor(Math.random() * hit.length)];
+          if (hit[Math.floor(Math.random() * hit.length)] == "yes") {
+            score += 1;
+            alert("It's a hit! Score: "+String(score));
+          }
         }
       }
-      document.getElementById("substatus").innerHTML = "Status: "+status
+      document.getElementById("substatus").innerHTML = "Status: "+status+", Score: "+String(score)
    }
   </script>
+
+ 
 </body>
 </html>

@@ -1,0 +1,201 @@
+head
+  title Googoh Docs
+  script(src='/socket.io/socket.io.js')
+  link(rel='stylesheet' href='/docs.css')
+style(type='text/css' media='print').
+  .no-print { display: none; }
+  .hidden-print { display: block; }
+#top-bar.no-print(style='width: 100%; position:fixed; top: 0; background-color: white;')
+  #top
+    h1#docname The Automatic Tomato Peeler
+    input(type='button' value='File')
+    input(type='button' value='Edit')
+    input(type='button' value='View')
+    input(type='button' value='Insert')
+    input(type='button' value='Format')
+    input(type='button' value='Tools')
+    input(type='button' value='Cheeseburger')
+    input(type='button' value='Help')
+    input#user(type='text' placeholder='Doc description')
+    button#share(onclick="document.getElementById('share-modal').style.display = 'block';") Share
+  #buttons(style='width: 100%;')
+    input(type='button' value='↶')
+    input(type='button' value='↷')
+    select#text-type
+      option#normal Normal Text
+    select#fonts
+      option#arial Arial
+      option#times Times New Roman
+      option#comic Comic Sans
+      option#sans Sans Serif
+      option#helvetica Helvetica
+      option#missile RSS-40 Buran Intercontinental Ballistic Missile
+    input(type='button' value='B' style='font-weight:bold;')
+    input(type='button' value='I' style='font-style: italic;')
+    input(type='button' value='U' style='text-decoration:underline;')
+    input#fsize(type='number' min='1' max='99' value='12' onchange='sixbynine()')
+    input#link(type='button' value='🔗')
+    input#chat(type='button' value='💬' onclick='send()')
+    select#mode(onchange='mode_change()')
+      option#edit Editing Mode
+      option#comment Comment Mode
+      option#view View Mode
+      option#plagiarism Plagiarism Mode
+      option#depeche Depeche Mode
+      option#sub Submarine Mode
+      option#sub1(style='display: none;') Submerge
+      option#sub2(style='display: none;') Dive
+      option#sub3(style='display: none;') Fire Torpedo
+      option#sub4(style='display: none;') Resurface
+      option#sub5(style='display: none;') Surrender
+      option#substatus(style='display: none;')
+    input#msg(type='text' placeholder='Search')
+#share-modal.no-print(style='width: 100%; height: 100%; position: fixed; display: none;')
+  #share-modal(style='width: 100%; height: 100%; opacity: 0.6; background-color: black;')
+  .modal
+    span.close(onclick="document.getElementById('share-modal').style.display = 'none';") &times;
+    h2 Share
+    input#share1(type='radio' name='share' value='doc')
+    label(for='age1') Document
+    br
+    input#share2(type='radio' name='share' value='ccn')
+    label(for='age2') Credit Card Number
+    br
+    input#share3(type='radio' name='share' value='nc')
+    label(for='age3') Classified Information
+    br
+    p With....
+    input#with1(type='radio' name='with' value='link')
+    label(for='with1') Everyone with this link
+    br
+    input#with2(type='radio' name='with' value='cl')
+    label(for='with2') Everyone on my Contact List
+    br
+    input#with3(type='radio' name='with' value='gad')
+    label(for='with3') Government Agencies (Domestic)
+    br
+    input#with4(type='radio' name='with' value='gaf')
+    label(for='with3') Government Agencies (Foreign)
+    br
+    input#with5(type='radio' name='with' value='ac')
+    label(for='with3') Advertising Corporations
+    br
+    input#with6(type='radio' name='with' value='yt')
+    label(for='with3') Youtube
+    br
+    input#with7(type='radio' name='with' value='met')
+    label(for='with3') The Metropolitan Museum of Art
+    br
+#document
+  center
+    b.hidden-print(style='display: none;') Insert Hidden Message
+    p.hidden-print(style='display: none;') Made by @rediar on Repl.it! 
+    textarea#top-text(disabled='')
+script.
+  let text = "In 1406, Georgi Roberto Junior, a brilliant Italian inventor and part time rich person, invented the automatic tomato peeler, changing the world forever, but in an unexpected way. Unfortunately, the tomato would not be discovered for another hundred years. This being the case, Georgi found it very hard to sell his inventions. Broke and desperate, he did the most logical move. In early 1408, Georgi sold all his posessions, and became a monk. In the monastery he had quite a lot of free time - he outsourced all his praying to China. He unappreciated during his lifetime, records show he died in 1415 around the age of 45, well before the tomato was discovered.";
+  let letter = 0;
+  document.addEventListener("keyup", function(event) {
+  let txt = document.getElementById("top-text");
+  if (letter >= text.length) {
+  txt.innerHTML = "";
+  letter = 0;
+  } else {
+  txt.innerHTML = txt.innerHTML+text[letter];
+  letter++;
+  }
+  });
+  function sixbynine() {
+  if (document.getElementById("fsize").value == "42") {
+  alert("How many roads must a man walk down?");
+  }
+  }
+  document.getElementById("msg").addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+  send();
+  }
+  });
+  let msg_collect = 0;
+  let msg_list = [];
+  let socket = io();
+  socket.on('d_msg', function(msg) {
+  let messages = document.getElementById("text-type");
+  let o = document.createElement("option");
+  let b = document.createElement("b");
+  b.innerHTML = msg.user+": ";
+  o.appendChild(b);
+  o.innerHTML = o.innerHTML+msg.content;
+  o.id = "m"+String(msg_collect);
+  messages.appendChild(o);
+  msg_collect++;
+  msg_list.push("m"+String(msg_collect));
+  if (msg_list.length > 5) {
+  while (msg_list.length > 5) {
+  document.getElementById(msg_list[0]).remove();
+  msg_list.splice(0, 1);
+  }
+  }
+  });
+  function send() {
+  socket.emit('msg', {user: document.getElementById("user").value, msg: document.getElementById("msg").value, id: String(#{id}n)});
+  document.getElementById("msg").value = "";
+  }
+  let score = 0;
+  let status = "surfaced";
+  document.getElementById("substatus").innerHTML = "Status: "+status+", Score: "+String(score)
+  function mode_change() {
+  //submarine game
+  let sub = ["sub1","sub2","sub3","sub4","sub5","substatus"];
+  let nonsub = ["edit","comment","view","plagiarism","depeche"];
+  if (document.getElementById("mode").value == "Submarine Mode") {
+  let s1 = document.getElementById("sub1").style.display;
+  console.log(s1)
+  if (s1 == "none") {
+  for (i = 0; i < sub.length; i++) {
+  let e = sub[i];
+  document.getElementById(e).style.display = "block";
+  }
+  for (i = 0; i < sub.length; i++) {
+  let e = nonsub[i];
+  document.getElementById(e).style.display = "none";
+  }
+  }
+  } else if (document.getElementById("mode").value == "Surrender") {
+  for (i = 0; i < sub.length; i++) {
+  let e = sub[i];
+  document.getElementById(e).style.display = "none";
+  }
+  for (i = 0; i < sub.length; i++) {
+  let e = nonsub[i];
+  document.getElementById(e).style.display = "block";
+  }
+  } else if (document.getElementById("mode").value == "Resurface") {
+  if (status == "surfaced") {
+  return
+  } else {
+  status = "surfaced";
+  }
+  } else if (document.getElementById("mode").value == "Submerge") {
+  if (status == "submerged") {
+  return
+  } else {
+  status = "submerged";
+  }
+  } else if (document.getElementById("mode").value == "Dive") {
+  if (status == "deep") {
+  return
+  } else {
+  status = "deep";
+  }
+  } else if (document.getElementById("mode").value == "Fire Torpedo") {
+  if (status == "submerged") {
+  return
+  } else {
+  let hit = ["yes","yes","no","no","no"];
+  if (hit[Math.floor(Math.random() * hit.length)] == "yes") {
+  score += 1;
+  alert("It's a hit! Score: "+String(score));
+  }
+  }
+  }
+  document.getElementById("substatus").innerHTML = "Status: "+status+", Score: "+String(score)
+  }

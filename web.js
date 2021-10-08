@@ -36,29 +36,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/chat/:id', function(req, res){
-    let github = ["monero-project/monero: Monero: the secure, private, untraceable cryptocurrency","mcostalba/Stockfish: UCI chess engine","pallets/flask: The Python micro framework for building web applications.","searx/searx: Privacy-respecting metasearch engine","EFForg/privacybadger: Privacy Badger is a browser extension that automatically learns to block invisible trackers."]
-    let wikipedia = ["Cactus - Wikipedia","42 (number) - Wikipedia","Segmentation fault - Wikipedia"]
-    let docs = ["Don't Panic - Google Docs","Koala Research Project - Google Docs","Google Privacy Violations - Google Docs","How to Eat Cheese - Google Docs","Nuclear Codes - Google Docs","Frederick the Great 2024 - Google Docs","Meta Thematic Metaphorical Haiku Literary Analysis of Ironic Virtue Allegories in Shakepeare's King Romeo's Midsummer Night Tempest - Google Docs"]
    if (!index.data.check_channel(req.params.id)) {
      return res.redirect('/');
    }
-   let skins_array = ["wikipedia"];
+   let skins_array = ["wikipedia","docs"];
    let skin = req.query.skin;
    if (skins_array.includes(skin)) {
-     let page = "";
-     let name = "";
      if (skin == "wikipedia") {
-       //page = choose(wikipedia);
-       page = "Cactus - Wikipedia";
-       if (page == "Cactus - Wikipedia") {
-         name = "cactus";
-       } else if (page == "42 (number) - Wikipedia") {
-         content = "";
-       } else if (page == "Segmentation fault - Wikipedia") {
-         content = "";
-       }
-     }
-     res.render(skin+"/"+name,{id: req.params.id, title: page});
+        let name = "cactus"
+        res.render(skin+"/"+name,{id: req.params.id, title: "Cactus - Wikipedia"});
+     } else if (skin == "docs") {
+        let name = "docs"
+        res.render(skin+"/"+name,{id: req.params.id, title: "Document Editor"});
+     }   
    } else {
      res.render('chat',{id: req.params.id});
    }
